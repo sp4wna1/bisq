@@ -1,2 +1,2 @@
-include ':app', ':markets', ':usecase', ':repository', ':service'
+include ':app', ':markets', ':usecase', ':repository', ':service', ':local'
 rootProject.name = "bisq"
