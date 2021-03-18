@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/marketsFragment">
+
+    <fragment
+        android:id="@+id/marketsFragment"
+        android:name="bisq.markets.view.MarketsFragment"
+        android:label="MarketsFragment"
+        app:moduleName="@string/markets" />
+</navigation>
