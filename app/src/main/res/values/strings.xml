@@ -3,4 +3,5 @@
     <string name="markets">markets</string>
     <string name="title_usecase">usecase</string>
     <string name="title_repository">repository</string>
+    <string name="title_service">service</string>
 </resources>
