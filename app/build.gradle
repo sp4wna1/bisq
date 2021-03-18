@@ -30,7 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    dynamicFeatures = [':markets', ':usecase', ':repository', ':service', ':local']
+    dynamicFeatures = [':markets', ':local']
 }
 
 dependencies {
@@ -53,4 +53,8 @@ dependencies {
     api "org.koin:koin-android:$koin_version"
     api "org.koin:koin-androidx-viewmodel:$koin_version"
     api "org.koin:koin-android:$kotlin_version"
+
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }
