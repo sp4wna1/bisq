@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/featureFragment"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
-    android:orientation="vertical"
     app:moduleName="@string/markets">
 
-</androidx.fragment.app.FragmentContainerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bids"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toStartOf="@id/asks"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_bid" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/asks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bids"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_ask" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
