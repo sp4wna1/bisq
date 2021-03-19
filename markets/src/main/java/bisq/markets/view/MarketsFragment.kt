@@ -48,7 +48,7 @@ class MarketsFragment : BaseFragment() {
         observeDepth()
 
         // TODO Remove this
-        viewModel.fetchDepth("btc_brl")
+        viewModel.fetchOffers("btc_brl")
     }.root
 
     private fun initViews() {
@@ -57,15 +57,25 @@ class MarketsFragment : BaseFragment() {
     }
 
     private fun observeDepth() {
-        viewModel.depth.observe(viewLifecycleOwner, Observer {
+        viewModel.offers.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> {
+                    binding.bidsProgress.visibility = View.VISIBLE
+                    binding.asksProgress.visibility = View.VISIBLE
                 }
                 Resource.Status.ERROR -> {
+                    binding.bidsProgress.visibility = View.GONE
+                    binding.asksProgress.visibility = View.GONE
                 }
                 Resource.Status.SUCCESS -> {
-                    (binding.bids.adapter as BidsAdapter).setData(it.data!!.bids)
-                    (binding.asks.adapter as AsksAdapter).setData(it.data!!.asks)
+                    binding.bidsProgress.visibility = View.GONE
+                    binding.asksProgress.visibility = View.GONE
+                    (binding.bids.adapter as BidsAdapter).setData(it.data!!.first.filter {
+                        it.direction == "BUY"
+                    })
+                    (binding.asks.adapter as AsksAdapter).setData(it.data!!.second.filter {
+                        it.direction == "SELL"
+                    })
                 }
             }
         })
