@@ -63,25 +63,25 @@
 
 
     <TextView
-        android:id="@+id/price_ask"
+        android:id="@+id/volume_ask"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:gravity="start"
-        android:text="@string/price"
-        app:layout_constraintEnd_toStartOf="@id/volume_ask"
+        android:text="@string/volume"
+        app:layout_constraintEnd_toStartOf="@id/price_ask"
         app:layout_constraintStart_toStartOf="@id/asks"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/volume_ask"
+        android:id="@+id/price_ask"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:gravity="end"
-        android:text="@string/volume"
+        android:text="@string/price"
         app:layout_constraintEnd_toEndOf="@id/asks"
-        app:layout_constraintStart_toEndOf="@id/price_ask"
+        app:layout_constraintStart_toEndOf="@id/volume_ask"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
