@@ -3,14 +3,15 @@ package bisq.markets.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import bisq.local.Offer
 import bisq.markets.databinding.ItemBidBinding
-import java.math.BigDecimal
+import network.bisq.toNumber
 
 internal class BidsAdapter : RecyclerView.Adapter<BidsAdapter.BidsViewHolder>() {
 
-    private val bids = mutableListOf<BigDecimal>()
+    private val bids = mutableListOf<Offer>()
 
-    fun setData(bids: List<BigDecimal>) {
+    fun setData(bids: List<Offer>) {
         this.bids.clear()
         this.bids.addAll(bids)
         this.notifyDataSetChanged()
@@ -34,8 +35,9 @@ internal class BidsAdapter : RecyclerView.Adapter<BidsAdapter.BidsViewHolder>() 
     internal class BidsViewHolder(private val binding: ItemBidBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(value: BigDecimal) {
-            binding.value.text = "$value"
+        fun bind(offer: Offer) {
+            binding.value.text = offer.price.toNumber(0)
+            binding.volume.text = offer.volume.toNumber(4)
         }
     }
 }
