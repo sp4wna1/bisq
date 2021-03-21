@@ -2,11 +2,21 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/marketsFragment">
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="network.bisq.view.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_marketsFragment"
+            app:destination="@id/marketsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/marketsFragment"
         android:name="bisq.markets.view.MarketsFragment"
         android:label="MarketsFragment"
         app:moduleName="@string/markets" />
+
 </navigation>
