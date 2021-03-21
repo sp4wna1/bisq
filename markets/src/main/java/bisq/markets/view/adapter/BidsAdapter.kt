@@ -32,6 +32,11 @@ internal class BidsAdapter : RecyclerView.Adapter<BidsAdapter.BidsViewHolder>() 
         holder.bind(bids[position])
     }
 
+    fun clear() {
+        this.bids.clear()
+        this.notifyDataSetChanged()
+    }
+
     internal class BidsViewHolder(private val binding: ItemBidBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

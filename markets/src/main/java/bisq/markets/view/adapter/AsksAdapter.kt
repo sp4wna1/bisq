@@ -32,6 +32,11 @@ internal class AsksAdapter : RecyclerView.Adapter<AsksAdapter.AsksViewHolder>() 
         holder.bind(asks[position])
     }
 
+    fun clear() {
+        this.asks.clear()
+        this.notifyDataSetChanged()
+    }
+
     internal class AsksViewHolder(private val binding: ItemAskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
