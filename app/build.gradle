@@ -31,6 +31,8 @@ android {
         jvmTarget = '1.8'
     }
     dynamicFeatures = [':markets', ':local']
+
+    buildFeatures.viewBinding true
 }
 
 dependencies {
