@@ -4,32 +4,34 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
         applicationId "network.bisq"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+
     dynamicFeatures = [':markets', ':local']
 
     buildFeatures.viewBinding true
@@ -37,26 +39,20 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation libraries.kotlin
+    implementation libraries.ktx
+    implementation libraries.appCompat
+    implementation libraries.material
+    implementation libraries.navigationFragment
+    implementation libraries.navigationUi
+    implementation libraries.navigationDynamic
+    implementation libraries.gsonConverter
 
-    api "androidx.constraintlayout:constraintlayout:2.0.4"
-
-    def nav_version = "2.3.4"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
-
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
-
-    def koin_version = "2.2.2"
-    api "org.koin:koin-android:$koin_version"
-    api "org.koin:koin-androidx-viewmodel:$koin_version"
-    api "org.koin:koin-android:$kotlin_version"
-
-    api 'com.squareup.retrofit2:retrofit:2.9.0'
-    api 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api libraries.constraint
+    api libraries.viewModel
+    api libraries.koin
+    api libraries.koinViewModel
+    api libraries.koinAndroid
+    api libraries.retrofit
+    api libraries.gson
 }
