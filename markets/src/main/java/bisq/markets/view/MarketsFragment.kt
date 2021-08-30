@@ -15,6 +15,7 @@ import bisq.markets.view.adapter.AsksAdapter
 import bisq.markets.view.adapter.BidsAdapter
 import bisq.markets.view.adapter.CurrencyAdapter
 import bisq.markets.viewmodel.MarketsViewModel
+import br.com.elitma.remote.remoteModule
 import kotlinx.coroutines.InternalCoroutinesApi
 import network.bisq.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,13 +32,13 @@ class MarketsFragment : BaseFragment() {
     @InternalCoroutinesApi
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        loadKoinModules(marketsModule)
+        loadKoinModules(listOf(remoteModule, marketsModule))
     }
 
     @InternalCoroutinesApi
     override fun onDetach() {
         super.onDetach()
-        unloadKoinModules(marketsModule)
+        unloadKoinModules(listOf(remoteModule, marketsModule))
     }
 
     override fun onCreateView(
@@ -110,7 +111,6 @@ class MarketsFragment : BaseFragment() {
                 Resource.Status.SUCCESS -> {
                     binding.bidsProgress.visibility = View.GONE
                     binding.asksProgress.visibility = View.GONE
-                    Log.d("GDP", "SUCCESS - ${it.data}")
                     (binding.bids.adapter as BidsAdapter).setData(it.data!!.first.filter {
                         it.direction == "BUY"
                     })
