@@ -51,9 +51,6 @@ class MarketsFragment : BaseFragment() {
         initViews()
         observeDepth()
         observeCurrencies()
-
-        // TODO Remove this
-        viewModel.fetchCurrencies()
     }.root
 
 

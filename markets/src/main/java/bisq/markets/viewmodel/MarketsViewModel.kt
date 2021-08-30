@@ -19,7 +19,11 @@ internal class MarketsViewModel(
     internal val offers = MutableLiveData<Resource<Pair<List<Offer>, List<Offer>>>>()
     internal val currencies = MutableLiveData<Resource<List<Currency>>>()
 
-    fun fetchCurrencies() {
+    init {
+        fetchCurrencies()
+    }
+
+    private fun fetchCurrencies() {
         viewModelScope.launch {
             currenciesUseCase.fetchCoins(object : Presenter<List<Currency>> {
                 override fun loading() {
