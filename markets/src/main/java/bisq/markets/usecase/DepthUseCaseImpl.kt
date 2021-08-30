@@ -14,7 +14,7 @@ class DepthUseCaseImpl(private val depthRepository: DepthRepository) :
     override suspend fun fetchDepth(market: String, presenter: Presenter<BidsAndAsks>) {
         depthRepository.fetchDepth(market)
             .onStart { presenter.loading() }
-            .catch { presenter.error() }
+            .catch { presenter.error(it) }
             .collect { result ->
                 if (result == null) {
                     presenter.error()

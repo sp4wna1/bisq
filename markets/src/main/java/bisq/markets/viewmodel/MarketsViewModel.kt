@@ -26,8 +26,8 @@ internal class MarketsViewModel(
                     currencies.postValue(Resource.loading())
                 }
 
-                override fun error() {
-                    currencies.postValue(Resource.error())
+                override fun error(throwable: Throwable?) {
+                    currencies.postValue(Resource.error(throwable))
                 }
 
                 override fun success(result: List<Currency>) {
@@ -45,8 +45,8 @@ internal class MarketsViewModel(
                     offers.postValue(Resource.loading())
                 }
 
-                override fun error() {
-                    offers.postValue(Resource.error())
+                override fun error(throwable: Throwable?) {
+                    offers.postValue(Resource.error(throwable))
                 }
 
                 override fun success(result: Pair<List<Offer>, List<Offer>>) {

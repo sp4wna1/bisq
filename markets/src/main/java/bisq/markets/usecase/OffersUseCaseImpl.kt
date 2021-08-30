@@ -20,7 +20,7 @@ internal class OffersUseCaseImpl(private val offersRepository: OffersRepository)
                 presenter.loading()
             }
             .catch {
-                presenter.error()
+                presenter.error(it)
             }
             .collect {
                 val buys = it.buysAndSellsResponse?.buys
@@ -47,7 +47,7 @@ internal class OffersUseCaseImpl(private val offersRepository: OffersRepository)
                         )
                     )
                 } else {
-                    presenter.error()
+                    presenter.error(null)
                 }
             }
     }
