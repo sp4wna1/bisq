@@ -1,8 +1,8 @@
 package bisq.markets.service
 
-import bisq.markets.service.model.CurrenciesResponse
 import bisq.markets.service.model.DepthResponse
 import bisq.markets.service.model.OffersResponse
+import br.com.elitma.remote.CurrenciesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -1,7 +1,6 @@
 package bisq.markets.repository
 
-import bisq.markets.service.model.CurrenciesResponse
-import bisq.markets.service.model.CurrencyResponse
+import br.com.elitma.remote.CurrenciesResponse
 import kotlinx.coroutines.flow.Flow
 
 interface CurrenciesRepository {
