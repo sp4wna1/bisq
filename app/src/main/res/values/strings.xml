@@ -5,4 +5,5 @@
     <string name="title_repository">repository</string>
     <string name="title_service">service</string>
     <string name="title_local">local</string>
+    <string name="title_remote">remote</string>
 </resources>
