@@ -26,4 +26,5 @@ dependencies {
 
     implementation project(":app")
     implementation project(":local")
+    implementation project(":remote")
 }
