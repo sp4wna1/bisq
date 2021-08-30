@@ -14,31 +14,17 @@ internal class CurrenciesUseCaseImpl(private val currenciesRepository: Currencie
             .onStart {
                 presenter.loading()
             }
-            .catch { presenter.error() }
+            .catch { presenter.error(it) }
             .collect {
-                presenter.success(
-                    listOf(
-                        Currency(
-                            it.brl.code ?: "",
-                            it.brl.name ?: "",
-                            it.brl.precision ?: 0,
-                            it.brl.type ?: ""
-                        ),
-                        Currency(
-                            it.usd.code ?: "",
-                            it.usd.name ?: "",
-                            it.usd.precision ?: 0,
-                            it.usd.type ?: ""
-                        )
-                        , Currency(
-                            it.btc.code ?: "",
-                            it.btc.name ?: "",
-                            it.btc.precision ?: 0,
-                            it.btc.type ?: ""
-                        )
+                presenter.success(it.currencies.map { response ->
+                    Currency(
+                        response.code,
+                        response.name,
+                        response.precision,
+                        response.type
                     )
+                }
                 )
             }
     }
-
 }
