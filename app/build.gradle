@@ -32,7 +32,7 @@ android {
 
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 
-    dynamicFeatures = [':markets', ':local']
+    dynamicFeatures = [':markets', ':local', ':remote']
 
     buildFeatures.viewBinding true
 }
@@ -46,13 +46,10 @@ dependencies {
     implementation libraries.navigationFragment
     implementation libraries.navigationUi
     implementation libraries.navigationDynamic
-    implementation libraries.gsonConverter
 
     api libraries.constraint
     api libraries.viewModel
     api libraries.koin
     api libraries.koinViewModel
     api libraries.koinAndroid
-    api libraries.retrofit
-    api libraries.gson
 }

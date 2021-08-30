@@ -1,2 +1,3 @@
-include ':app', ':markets', ':local'
+include ':app', ':markets', ':local', ':remote'
+
 rootProject.name = "bisq"

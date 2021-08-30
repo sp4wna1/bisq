@@ -1,0 +1,35 @@
+plugins {
+    id 'com.android.dynamic-feature'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    
+    implementation libraries.kotlin
+    implementation libraries.ktx
+
+    implementation libraries.gsonConverter
+
+    api libraries.retrofit
+    api libraries.gson
+    api libraries.koin
+    api libraries.koinViewModel
+    api libraries.koinAndroid
+
+    implementation project(":app")
+}
