@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.*
 
 internal class CurrenciesUseCaseImpl(private val currenciesRepository: CurrenciesRepository) :
     CurrenciesUseCase {
-    override suspend fun fetchCoins(presenter: Presenter<List<Currency>>) {
-        currenciesRepository.fetchCurrencies()
+    override suspend fun fetchCoins(presenter: Presenter<List<Currency>>, type: String?) {
+        currenciesRepository.fetchCurrencies(type)
             .onStart {
                 presenter.loading()
             }
@@ -26,8 +26,8 @@ internal class CurrenciesUseCaseImpl(private val currenciesRepository: Currencie
             }
     }
 
-    override suspend fun fetchCoins(): Flow<List<Currency>> =
-        currenciesRepository.fetchCurrencies().map {
+    override suspend fun fetchCoins(type: String?): Flow<List<Currency>> =
+        currenciesRepository.fetchCurrencies(type).map {
             it.currencies.map { response ->
                 Currency(
                     response.code,
