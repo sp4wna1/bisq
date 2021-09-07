@@ -23,6 +23,9 @@ dependencies {
     implementation libraries.kotlin
     implementation libraries.ktx
     implementation libraries.material
+    implementation libraries.navigationFragment
+    implementation libraries.navigationUi
+    implementation libraries.navigationDynamic
 
     implementation project(":app")
     implementation project(":local")
