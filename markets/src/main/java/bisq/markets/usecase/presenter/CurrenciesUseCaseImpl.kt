@@ -3,9 +3,7 @@ package bisq.markets.usecase.presenter
 import bisq.local.Currency
 import bisq.markets.repository.CurrenciesRepository
 import bisq.markets.usecase.CurrenciesUseCase
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 
 internal class CurrenciesUseCaseImpl(private val currenciesRepository: CurrenciesRepository) :
     CurrenciesUseCase {
@@ -27,4 +25,16 @@ internal class CurrenciesUseCaseImpl(private val currenciesRepository: Currencie
                 )
             }
     }
+
+    override suspend fun fetchCoins(): Flow<List<Currency>> =
+        currenciesRepository.fetchCurrencies().map {
+            it.currencies.map { response ->
+                Currency(
+                    response.code,
+                    response.name,
+                    response.precision,
+                    response.type
+                )
+            }
+        }
 }
