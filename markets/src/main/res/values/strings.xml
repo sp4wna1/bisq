@@ -2,4 +2,6 @@
 <resources>
     <string name="price">Price</string>
     <string name="volume">Volume</string>
+    <string name="select_coin_currency">Select Coin</string>
+    <string name="select_coin_asset">Select Asset</string>
 </resources>
