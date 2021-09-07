@@ -24,6 +24,7 @@
 
     <fragment
         android:id="@+id/assetFragment"
+        android:name="bisq.markets.view.AssetFragment"
         app:moduleName="@string/markets"
         tools:layout="@layout/fragment_asset" />
 
@@ -32,14 +33,15 @@
         android:name="bisq.markets.view.CurrencyFragment"
         app:moduleName="@string/markets"
         tools:layout="@layout/fragment_currency">
+
         <action
             android:id="@+id/action_currencyFragment_to_assetFragment"
             app:destination="@id/assetFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/tradesFragment"
-        android:label="TradesFragment"
         app:moduleName="@string/markets"
         tools:layout="@layout/fragment_trades" />
 
