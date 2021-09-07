@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.flowOn
 
 internal class CurrenciesRepositoryImpl(private val apiService: ApiService) : CurrenciesRepository {
 
-    override suspend fun fetchCurrencies(): Flow<CurrenciesResponse> =
-        flow { emit(apiService.getCurrencies()) }.flowOn(
+    override suspend fun fetchCurrencies(type: String?): Flow<CurrenciesResponse> =
+        flow { emit(apiService.getCurrencies(type)) }.flowOn(
             Dispatchers.IO
         )
 
