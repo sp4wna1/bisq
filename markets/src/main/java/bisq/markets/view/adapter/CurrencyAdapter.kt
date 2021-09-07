@@ -25,7 +25,7 @@ internal class CurrencyAdapter(private val currencies: List<Currency>) : Recycle
                 binding.name.setText(currency.name)
 
                 binding.root.setOnClickListener {
-                    binding.root.findNavController().navigate(network.bisq.R.id.action_curracyFragment_to_assetFragment)
+                    binding.root.findNavController().navigate(network.bisq.R.id.action_currencyFragment_to_assetFragment)
                 }
             }
 

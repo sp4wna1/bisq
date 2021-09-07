@@ -9,10 +9,10 @@
         android:id="@+id/splashFragment"
         android:name="network.bisq.view.SplashFragment"
         android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_curracyFragment"
-            app:destination="@id/curracyFragment" />
+            android:id="@+id/action_splashFragment_to_currencyFragment"
+            app:destination="@id/currencyFragment" />
     </fragment>
 
     <fragment
@@ -28,12 +28,12 @@
         tools:layout="@layout/fragment_asset" />
 
     <fragment
-        android:id="@+id/curracyFragment"
+        android:id="@+id/currencyFragment"
         android:name="bisq.markets.view.CurrencyFragment"
         app:moduleName="@string/markets"
-        tools:layout="@layout/fragment_currency" >
+        tools:layout="@layout/fragment_currency">
         <action
-            android:id="@+id/action_curracyFragment_to_assetFragment"
+            android:id="@+id/action_currencyFragment_to_assetFragment"
             app:destination="@id/assetFragment" />
     </fragment>
 
@@ -42,6 +42,5 @@
         android:label="TradesFragment"
         app:moduleName="@string/markets"
         tools:layout="@layout/fragment_trades" />
-
 
 </navigation>
