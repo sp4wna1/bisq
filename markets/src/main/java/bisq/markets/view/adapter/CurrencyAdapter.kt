@@ -7,39 +7,39 @@ import androidx.recyclerview.widget.RecyclerView
 import bisq.local.Currency
 import bisq.markets.databinding.ItemCurrencyBinding
 
+internal class CurrencyAdapter : RecyclerView.Adapter<CurrencyAdapter.ViewHolder>() {
 
-internal class CurrencyAdapter(private val currencies: List<Currency>) : RecyclerView.Adapter<CurrencyAdapter.ViewHolder>() {
+    private val currencies = mutableListOf<Currency>()
 
-
-
-    override fun getItemCount(): Int {
-        return currencies.size
+    fun setData(currencies: List<Currency>) {
+        this.currencies.clear()
+        this.currencies.addAll(currencies)
+        this.notifyDataSetChanged()
     }
 
+    override fun getItemCount(): Int = currencies.size
 
-    class ViewHolder(private val binding: ItemCurrencyBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-
-            fun setUp(currency: Currency){
-                binding.name.setText(currency.name)
-
-                binding.root.setOnClickListener {
-                    binding.root.findNavController().navigate(network.bisq.R.id.action_currencyFragment_to_assetFragment)
-                }
-            }
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemCurrencyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(ItemCurrencyBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currency = currencies[position]
-        holder.setUp(currency)
+        holder.setUp(currencies[position])
+    }
+
+    internal class ViewHolder(
+        private val binding: ItemCurrencyBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+
+        fun setUp(currency: Currency) {
+            binding.name.text = currency.name
+
+            binding.root.setOnClickListener {
+                binding.root.findNavController()
+                    .navigate(network.bisq.R.id.action_currencyFragment_to_assetFragment)
+            }
+        }
+
     }
 }
 
