@@ -2,6 +2,7 @@ package bisq.markets.service
 
 import bisq.markets.service.model.DepthResponse
 import bisq.markets.service.model.OffersResponse
+import br.com.elitma.remote.TradesResponse
 import br.com.elitma.remote.CurrenciesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,4 +16,7 @@ interface ApiService {
 
     @GET("api/currencies")
     suspend fun getCurrencies(): CurrenciesResponse
+
+    @GET("bisq/api/markets/trades")
+    suspend fun getTrades(@Query("market") market: String): TradesResponse
 }
