@@ -1,61 +1,45 @@
 package bisq.markets.view.adapter
 
-import android.database.DataSetObserver
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.SpinnerAdapter
-import android.widget.TextView
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import bisq.local.Currency
-import bisq.markets.R
-
-internal class CurrencyAdapter(
-    private val currencies: List<Currency>
-) : SpinnerAdapter {
+import bisq.markets.databinding.ItemCurrencyBinding
 
 
-    override fun isEmpty(): Boolean = currencies.isEmpty()
+internal class CurrencyAdapter(private val currencies: List<Currency>) : RecyclerView.Adapter<CurrencyAdapter.ViewHolder>() {
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        return LayoutInflater.from(parent?.context)
-            .inflate(android.R.layout.simple_spinner_item, parent, false)
+
+
+    override fun getItemCount(): Int {
+        return currencies.size
     }
 
-    override fun registerDataSetObserver(observer: DataSetObserver?) {
 
-    }
+    class ViewHolder(private val binding: ItemCurrencyBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    override fun getItemViewType(position: Int): Int {
-        return 0
-    }
 
-    override fun getItem(position: Int): Currency = currencies[position]
+            fun setUp(currency: Currency){
+                binding.name.setText(currency.name)
 
-    override fun getViewTypeCount(): Int {
-        return 1
-    }
-
-    override fun getItemId(position: Int): Long = currencies[position].hashCode().toLong()
-
-    override fun hasStableIds(): Boolean {
-        return false
-    }
-
-    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View =
-        convertView?.apply {
-            findViewById<TextView>(R.id.name).text =
-                "${currencies[position].name} (${currencies[position].code})"
-        }
-            ?: LayoutInflater.from(parent?.context)
-                .inflate(R.layout.item_currency, parent, false).apply {
-                    findViewById<TextView>(R.id.name).text =
-                        "${currencies[position].name} (${currencies[position].code})"
+                binding.root.setOnClickListener {
+                    binding.root.findNavController().navigate(network.bisq.R.id.action_curracyFragment_to_assetFragment)
                 }
-
-    override fun unregisterDataSetObserver(observer: DataSetObserver?) {
+            }
 
     }
 
-    override fun getCount(): Int = currencies.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemCurrencyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
 
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currency = currencies[position]
+        holder.setUp(currency)
+    }
 }
+
