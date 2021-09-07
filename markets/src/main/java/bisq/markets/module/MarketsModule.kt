@@ -4,6 +4,7 @@ import bisq.markets.repository.*
 import bisq.markets.service.ApiService
 import bisq.markets.usecase.*
 import bisq.markets.usecase.presenter.CurrenciesUseCaseImpl
+import bisq.markets.viewmodel.CurrencyViewModel
 import bisq.markets.viewmodel.MarketsViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -14,6 +15,7 @@ import retrofit2.Retrofit
 @InternalCoroutinesApi
 val marketsModule = module {
     viewModel { MarketsViewModel(get(), get()) }
+    viewModel { CurrencyViewModel(get()) }
 
     factory<DepthUseCase> { DepthUseCaseImpl(get()) }
     factory<OffersUseCase> { OffersUseCaseImpl(get()) }
