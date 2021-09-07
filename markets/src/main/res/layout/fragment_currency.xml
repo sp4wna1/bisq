@@ -53,4 +53,14 @@
         app:layout_constraintTop_toBottomOf="@id/select_coin"
         tools:listitem="@layout/item_currency" />
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="@id/coins_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/coins_list" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
