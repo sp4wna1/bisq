@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="network.bisq.view.SplashFragment"
-        android:label="SplashFragment" >
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_marketsFragment"
-            app:destination="@id/marketsFragment" />
+            android:id="@+id/action_splashFragment_to_curracyFragment"
+            app:destination="@id/curracyFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/marketsFragment"
         android:name="bisq.markets.view.MarketsFragment"
         android:label="MarketsFragment"
-        app:moduleName="@string/markets" />
+        app:moduleName="@string/markets"
+        tools:layout="@layout/fragment_markets" />
+
+    <fragment
+        android:id="@+id/assetFragment"
+        app:moduleName="@string/markets"
+        tools:layout="@layout/fragment_asset" />
+
+    <fragment
+        android:id="@+id/curracyFragment"
+        android:name="bisq.markets.view.CurrencyFragment"
+        app:moduleName="@string/markets"
+        tools:layout="@layout/fragment_currency" >
+        <action
+            android:id="@+id/action_curracyFragment_to_assetFragment"
+            app:destination="@id/assetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tradesFragment"
+        android:label="TradesFragment"
+        app:moduleName="@string/markets"
+        tools:layout="@layout/fragment_trades" />
+
 
 </navigation>
