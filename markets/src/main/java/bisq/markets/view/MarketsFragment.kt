@@ -68,9 +68,9 @@ class MarketsFragment : BaseFragment() {
                 position: Int,
                 id: Long
             ) {
-                val currency = (binding.currencies.adapter as CurrencyAdapter).getItem(position)
-                Log.d("GDP", "OnItemSelected btc_${currency.code.toLowerCase()}")
-                viewModel.fetchOffers("btc_${currency.code.toLowerCase()}")
+//                val currency = (binding.currencies.adapter as CurrencyAdapter).getItem(position)
+//                Log.d("GDP", "OnItemSelected btc_${currency.code.toLowerCase()}")
+//                viewModel.fetchOffers("btc_${currency.code.toLowerCase()}")
             }
         }
     }
@@ -84,7 +84,7 @@ class MarketsFragment : BaseFragment() {
                 }
                 Resource.Status.SUCCESS -> {
                     Log.d("GDP", "${it.data}")
-                    binding.currencies.adapter = CurrencyAdapter(it.data ?: emptyList())
+//                    binding.currencies.adapter = CurrencyAdapter(it.data ?: emptyList())
                 }
             }
         })
