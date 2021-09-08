@@ -32,7 +32,7 @@ android {
 
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 
-    dynamicFeatures = [':markets', ':local', ':remote']
+    dynamicFeatures = [':markets', ':local', ':remote',':charts']
 
     buildFeatures.viewBinding true
 }
