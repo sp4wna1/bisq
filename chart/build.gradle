@@ -5,8 +5,9 @@ plugins {
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
-
     defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
         consumerProguardFiles 'consumer-rules.pro'
     }
     compileOptions {
@@ -19,6 +20,10 @@ android {
     buildFeatures.viewBinding true
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     implementation libraries.kotlin
     implementation libraries.ktx
@@ -26,6 +31,11 @@ dependencies {
     implementation libraries.navigationFragment
     implementation libraries.navigationUi
     implementation libraries.navigationDynamic
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
 
     implementation project(":app")
     implementation project(":local")
