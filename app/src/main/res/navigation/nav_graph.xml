@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_splashFragment_to_currencyFragment"
             app:destination="@id/currencyFragment" />
+        <action
+            android:id="@+id/splash_Fragment_to_chartFragment"
+            app:destination="@id/chartFragment"/>
     </fragment>
 
     <fragment
@@ -38,11 +41,19 @@
             android:id="@+id/action_currencyFragment_to_assetFragment"
             app:destination="@id/assetFragment" />
 
+
     </fragment>
 
     <fragment
         android:id="@+id/tradesFragment"
         app:moduleName="@string/markets"
         tools:layout="@layout/fragment_trades" />
+
+    <fragment
+        android:name="bisq.android.chart.ChartFragment"
+        android:id="@+id/chartFragment"
+        app:moduleName="chart"
+        tools:layout="@layout/fragment_chart"/>
+
 
 </navigation>
