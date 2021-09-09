@@ -22,7 +22,7 @@ class SplashFragment : BaseFragment() {
         binding = this
 
         binding.root.postDelayed({
-            binding.root.findNavController().navigate(R.id.action_splashFragment_to_currencyFragment)
+            binding.root.findNavController().navigate(R.id.splash_Fragment_to_chartFragment)
         }, 2000L)
 
     }.root
