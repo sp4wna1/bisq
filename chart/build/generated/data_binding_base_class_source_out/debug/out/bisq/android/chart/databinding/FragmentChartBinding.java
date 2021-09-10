@@ -4,13 +4,13 @@ package bisq.android.chart.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import bisq.android.chart.R;
 import com.github.mikephil.charting.charts.CandleStickChart;
+import com.google.android.material.tabs.TabLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -20,16 +20,16 @@ public final class FragmentChartBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final Button buttonAddCandle;
+  public final CandleStickChart candleChart;
 
   @NonNull
-  public final CandleStickChart candlechart;
+  public final TabLayout tabs;
 
-  private FragmentChartBinding(@NonNull ConstraintLayout rootView, @NonNull Button buttonAddCandle,
-      @NonNull CandleStickChart candlechart) {
+  private FragmentChartBinding(@NonNull ConstraintLayout rootView,
+      @NonNull CandleStickChart candleChart, @NonNull TabLayout tabs) {
     this.rootView = rootView;
-    this.buttonAddCandle = buttonAddCandle;
-    this.candlechart = candlechart;
+    this.candleChart = candleChart;
+    this.tabs = tabs;
   }
 
   @Override
@@ -59,19 +59,19 @@ public final class FragmentChartBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.buttonAddCandle;
-      Button buttonAddCandle = rootView.findViewById(id);
-      if (buttonAddCandle == null) {
+      id = R.id.candleChart;
+      CandleStickChart candleChart = rootView.findViewById(id);
+      if (candleChart == null) {
         break missingId;
       }
 
-      id = R.id.candlechart;
-      CandleStickChart candlechart = rootView.findViewById(id);
-      if (candlechart == null) {
+      id = R.id.tabs;
+      TabLayout tabs = rootView.findViewById(id);
+      if (tabs == null) {
         break missingId;
       }
 
-      return new FragmentChartBinding((ConstraintLayout) rootView, buttonAddCandle, candlechart);
+      return new FragmentChartBinding((ConstraintLayout) rootView, candleChart, tabs);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
