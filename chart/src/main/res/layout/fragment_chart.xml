@@ -5,11 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/buttonAddCandle"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/black"
+        android:text="Add Candle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <com.github.mikephil.charting.charts.CandleStickChart
         android:id="@+id/candlechart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="-210dp">
+
+
+    </com.github.mikephil.charting.charts.CandleStickChart>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
