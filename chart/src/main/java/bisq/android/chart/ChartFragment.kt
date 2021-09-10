@@ -1,21 +1,25 @@
 package bisq.android.chart
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import bisq.android.chart.databinding.FragmentChartBinding
+import bisq.local.Resource
+import br.com.elitma.remote.remoteModule
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
 import network.bisq.base.BaseFragment
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.random.Random
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.unloadKoinModules
 
 class ChartFragment : BaseFragment() {
 
@@ -23,97 +27,93 @@ class ChartFragment : BaseFragment() {
 
     private val viewModel: ChartsViewModel by viewModel()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        loadKoinModules(listOf(remoteModule, chartModule))
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        unloadKoinModules(listOf(remoteModule, chartModule))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View = FragmentChartBinding.inflate(inflater, container, false).apply {
         binding = this
-        setCandleStickChart()
-
+        viewModel.getCharts("BTC_USD", CandleInterval.DAY)
     }.root
 
-    fun setCandleStickChart() {
-        var x = 0F
-        binding.buttonAddCandle.setOnClickListener {
-            addCandle(x)
-            x += 1
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.candles.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                }
+                Resource.Status.ERROR -> {
+                }
+                Resource.Status.SUCCESS -> {
 
-        }
+                    val candles = it.data
+                    if (candles.isNullOrEmpty()) {
+                        Toast.makeText(requireContext(), "NullOrEmpty", Toast.LENGTH_LONG).show()
+                    } else {
+                        // X values
+                        val xvalue = ArrayList<String>()
+                        xvalue.add("10:00 AM")
+                        xvalue.add("11:00 AM")
+                        xvalue.add("12:00 AM")
+                        xvalue.add("3:00 PM")
+                        xvalue.add("5:00 PM")
+                        xvalue.add("8:00 PM")
+                        xvalue.add("10:00 PM")
 
-
-    }
-
-
-    fun addCandle(x: Float) {
-        // X values
-        val xvalue = ArrayList<String>()
-        xvalue.add("10:00 AM")
-        xvalue.add("11:00 AM")
-        xvalue.add("12:00 AM")
-        xvalue.add("3:00 PM")
-        xvalue.add("5:00 PM")
-        xvalue.add("8:00 PM")
-        xvalue.add("10:00 PM")
-
-        //y  axis
-
-        binding.candlechart.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                android.R.color.white
-            )
-        )
-        binding.candlechart.animateXY(1000, 1000)
-
-        val xval = binding.candlechart.xAxis
-        xval.position = XAxis.XAxisPosition.BOTTOM
-        xval.setDrawGridLines(false)
+                        val xval = binding.candlechart.xAxis
+                        xval.position = XAxis.XAxisPosition.BOTTOM
+                        xval.setDrawGridLines(false)
 
 
-        val candleEntry = CandleEntry(
-            x,
-            Random.nextDouble(0.0, 100.0).toFloat(),
-            Random.nextDouble(0.0, 100.0).toFloat(),
-            Random.nextDouble(0.0, 100.0).toFloat(),
-            Random.nextDouble(0.0, 100.0).toFloat()
-        )
-        val candleList = ArrayList<CandleEntry>()
-        candleList.add(candleEntry)
+                        binding.candlechart.setBackgroundColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                android.R.color.white
+                            )
+                        )
 
-        val candleDataSet = CandleDataSet(candleList, "first")
-        candleDataSet.color = Color.rgb(80, 80, 80)
-        candleDataSet.shadowColor = ContextCompat.getColor(
-            requireContext(),
-            android.R.color.holo_green_light
-        )
-        candleDataSet.shadowWidth = 1f
-        candleDataSet.decreasingColor =
-            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
-        candleDataSet.decreasingPaintStyle = Paint.Style.FILL
+                        val candleList = candles.mapIndexed { index, candleResponse ->
+                            CandleEntry(index.toFloat(),
+                                candleResponse.high.toFloat(),
+                                candleResponse.low.toFloat(),
+                                candleResponse.open.toFloat(),
+                                candleResponse.close.toFloat())
+                        }
 
-
-        candleDataSet.increasingColor = ContextCompat.getColor(
-            requireContext(),
-            android.R.color.holo_green_light
-        )
-        candleDataSet.increasingPaintStyle = Paint.Style.FILL
+                        val candleDataSet = CandleDataSet(candleList, "first")
+                        candleDataSet.color = Color.rgb(80, 80, 80)
+                        candleDataSet.shadowColor = ContextCompat.getColor(
+                            requireContext(),
+                            android.R.color.darker_gray
+                        )
+                        candleDataSet.shadowWidth = 1f
+                        candleDataSet.decreasingColor =
+                            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+                        candleDataSet.decreasingPaintStyle = Paint.Style.FILL
 
 
-        val data = binding.candlechart.data
-        if (data == null) {
-            binding.candlechart.data = CandleData(candleDataSet)
-        } else {
-            binding.candlechart.data.addEntry(
-                candleEntry,
-                (Math.random() * data.dataSetCount).toInt()
-            )
-            data.notifyDataChanged()
-            binding.candlechart.notifyDataSetChanged()
+                        candleDataSet.increasingColor = ContextCompat.getColor(
+                            requireContext(),
+                            android.R.color.holo_green_light
+                        )
+                        candleDataSet.increasingPaintStyle = Paint.Style.FILL
+
+
+                        binding.candlechart.data = CandleData(candleDataSet)
+                    }
+                }
+            }
         }
     }
-
-
 }
 
