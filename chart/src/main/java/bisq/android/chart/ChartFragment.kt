@@ -13,7 +13,9 @@ import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
 import network.bisq.base.BaseFragment
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.random.Random
 
 class ChartFragment : BaseFragment() {
 
@@ -33,6 +35,18 @@ class ChartFragment : BaseFragment() {
     }.root
 
     fun setCandleStickChart() {
+        var x = 0F
+        binding.buttonAddCandle.setOnClickListener {
+            addCandle(x)
+            x += 1
+
+        }
+
+
+    }
+
+
+    fun addCandle(x: Float) {
         // X values
         val xvalue = ArrayList<String>()
         xvalue.add("10:00 AM")
@@ -45,41 +59,61 @@ class ChartFragment : BaseFragment() {
 
         //y  axis
 
-        val candlesStickEntry = ArrayList<CandleEntry>()
-        candlesStickEntry.add(CandleEntry(0f, 225.0f, 219.84f, 224.94f, 226.41f))
-        candlesStickEntry.add(CandleEntry(1f, 228.0f, 222.14f, 223.00f, 212.41f))
-        candlesStickEntry.add(CandleEntry(2f, 226.84f, 217.84f, 222.9f, 229.41f))
-        candlesStickEntry.add(CandleEntry(3f, 222.0f, 216.12f, 214.94f, 216.41f))
-        candlesStickEntry.add(CandleEntry(4f, 226.56f, 212.84f, 224.33f, 229.41f))
-        candlesStickEntry.add(CandleEntry(5f, 221.12f, 269.84f, 228.14f, 216.41f))
-        candlesStickEntry.add(CandleEntry(6f, 220.9f, 237.84f, 224.94f, 276.41f))
+        binding.candlechart.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                android.R.color.white
+            )
+        )
+        binding.candlechart.animateXY(1000, 1000)
 
-        val candleDataSet = CandleDataSet(candlesStickEntry, "first")
-        candleDataSet.color = Color.rgb(80, 80,80)
-        candleDataSet.shadowColor = ContextCompat.getColor(requireContext(),
+        val xval = binding.candlechart.xAxis
+        xval.position = XAxis.XAxisPosition.BOTTOM
+        xval.setDrawGridLines(false)
+
+
+        val candleEntry = CandleEntry(
+            x,
+            Random.nextDouble(0.0, 100.0).toFloat(),
+            Random.nextDouble(0.0, 100.0).toFloat(),
+            Random.nextDouble(0.0, 100.0).toFloat(),
+            Random.nextDouble(0.0, 100.0).toFloat()
+        )
+        val candleList = ArrayList<CandleEntry>()
+        candleList.add(candleEntry)
+
+        val candleDataSet = CandleDataSet(candleList, "first")
+        candleDataSet.color = Color.rgb(80, 80, 80)
+        candleDataSet.shadowColor = ContextCompat.getColor(
+            requireContext(),
             android.R.color.holo_green_light
         )
         candleDataSet.shadowWidth = 1f
-        candleDataSet.decreasingColor = ContextCompat.getColor(requireContext(),android.R.color.holo_red_dark)
+        candleDataSet.decreasingColor =
+            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
         candleDataSet.decreasingPaintStyle = Paint.Style.FILL
 
 
-        candleDataSet.increasingColor = ContextCompat.getColor(requireContext(),
+        candleDataSet.increasingColor = ContextCompat.getColor(
+            requireContext(),
             android.R.color.holo_green_light
         )
         candleDataSet.increasingPaintStyle = Paint.Style.FILL
 
-        val candledata = CandleData(candleDataSet)
-        binding.candlechart.data = candledata
-        binding.candlechart.setBackgroundColor(ContextCompat.getColor(requireContext(),android.R.color.white))
-        binding.candlechart.animateXY(3000,3000)
 
-        val xval = binding.candlechart.xAxis
-        xval.position= XAxis.XAxisPosition.BOTTOM
-        xval.setDrawGridLines(false)
+        val data = binding.candlechart.data
+        if (data == null) {
+            binding.candlechart.data = CandleData(candleDataSet)
+        } else {
+            binding.candlechart.data.addEntry(
+                candleEntry,
+                (Math.random() * data.dataSetCount).toInt()
+            )
+            data.notifyDataChanged()
+            binding.candlechart.notifyDataSetChanged()
+        }
     }
 
 
 }
-
 
