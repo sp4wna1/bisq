@@ -1,7 +1,5 @@
 package bisq.android.chart
 
-data class CandlesResponse(val candles: List<CandleResponse>)
-
 data class CandleResponse(
     val period_start: Long,
     val open: String,
@@ -10,5 +8,5 @@ data class CandleResponse(
     val low: String,
     val avg: String,
     val volume_right: String,
-    val volume_left: String
+    val volume_left: String,
 )
