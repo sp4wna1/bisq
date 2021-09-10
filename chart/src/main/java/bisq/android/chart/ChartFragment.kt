@@ -1,9 +1,12 @@
 package bisq.android.chart
 
+import android.R
+import android.app.ActionBar
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +19,12 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
+import com.google.android.material.tabs.TabLayout
 import network.bisq.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
+import bisq.android.chart.CandleInterval as t
 
 class ChartFragment : BaseFragment() {
 
@@ -43,7 +48,7 @@ class ChartFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View = FragmentChartBinding.inflate(inflater, container, false).apply {
         binding = this
-        viewModel.getCharts("BTC_USD", CandleInterval.DAY)
+//        viewModel.getCharts("BTC_USD", t.DAY)
     }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,6 +60,8 @@ class ChartFragment : BaseFragment() {
                 Resource.Status.ERROR -> {
                 }
                 Resource.Status.SUCCESS -> {
+                    binding.candleChart.invalidate()
+
 
                     val candles = it.data
                     if (candles.isNullOrEmpty()) {
@@ -70,50 +77,81 @@ class ChartFragment : BaseFragment() {
                         xvalue.add("8:00 PM")
                         xvalue.add("10:00 PM")
 
-                        val xval = binding.candlechart.xAxis
+                        val xval = binding.candleChart.xAxis
                         xval.position = XAxis.XAxisPosition.BOTTOM
                         xval.setDrawGridLines(false)
 
 
-                        binding.candlechart.setBackgroundColor(
+                        binding.candleChart.setBackgroundColor(
                             ContextCompat.getColor(
                                 requireContext(),
-                                android.R.color.white
+                                R.color.white
                             )
                         )
 
                         val candleList = candles.mapIndexed { index, candleResponse ->
-                            CandleEntry(index.toFloat(),
+                            CandleEntry(
+                                index.toFloat(),
                                 candleResponse.high.toFloat(),
                                 candleResponse.low.toFloat(),
                                 candleResponse.open.toFloat(),
-                                candleResponse.close.toFloat())
+                                candleResponse.close.toFloat()
+                            )
                         }
 
                         val candleDataSet = CandleDataSet(candleList, "first")
                         candleDataSet.color = Color.rgb(80, 80, 80)
                         candleDataSet.shadowColor = ContextCompat.getColor(
                             requireContext(),
-                            android.R.color.darker_gray
+                            R.color.darker_gray
                         )
                         candleDataSet.shadowWidth = 1f
                         candleDataSet.decreasingColor =
-                            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+                            ContextCompat.getColor(requireContext(), R.color.holo_red_dark)
                         candleDataSet.decreasingPaintStyle = Paint.Style.FILL
 
 
                         candleDataSet.increasingColor = ContextCompat.getColor(
                             requireContext(),
-                            android.R.color.holo_green_light
+                            R.color.holo_green_light
                         )
                         candleDataSet.increasingPaintStyle = Paint.Style.FILL
 
 
-                        binding.candlechart.data = CandleData(candleDataSet)
+                        binding.candleChart.data = CandleData(candleDataSet)
                     }
                 }
             }
         }
+        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewModel.getCharts(
+                    "BTC_USD",
+                    bisq.android.chart.CandleInterval.values().get(tab?.position ?: 0)
+                )
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
+
+
+
+        binding.tabs.addTab(binding.tabs.newTab().setText("30M"))
+        binding.tabs.addTab(binding.tabs.newTab().setText("1H"))
+        binding.tabs.addTab(binding.tabs.newTab().setText("12H"))
+        binding.tabs.addTab(binding.tabs.newTab().setText("1D"))
+        binding.tabs.addTab(binding.tabs.newTab().setText("1W"))
+        binding.tabs.addTab(binding.tabs.newTab().setText("1M"))
+        binding.tabs.addTab(binding.tabs.newTab().setText("1Y"))
+
+
     }
 }
 
