@@ -4,6 +4,7 @@ package bisq.android.chart.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,11 +20,15 @@ public final class FragmentChartBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final Button buttonAddCandle;
+
+  @NonNull
   public final CandleStickChart candlechart;
 
-  private FragmentChartBinding(@NonNull ConstraintLayout rootView,
+  private FragmentChartBinding(@NonNull ConstraintLayout rootView, @NonNull Button buttonAddCandle,
       @NonNull CandleStickChart candlechart) {
     this.rootView = rootView;
+    this.buttonAddCandle = buttonAddCandle;
     this.candlechart = candlechart;
   }
 
@@ -54,13 +59,19 @@ public final class FragmentChartBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.buttonAddCandle;
+      Button buttonAddCandle = rootView.findViewById(id);
+      if (buttonAddCandle == null) {
+        break missingId;
+      }
+
       id = R.id.candlechart;
       CandleStickChart candlechart = rootView.findViewById(id);
       if (candlechart == null) {
         break missingId;
       }
 
-      return new FragmentChartBinding((ConstraintLayout) rootView, candlechart);
+      return new FragmentChartBinding((ConstraintLayout) rootView, buttonAddCandle, candlechart);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
