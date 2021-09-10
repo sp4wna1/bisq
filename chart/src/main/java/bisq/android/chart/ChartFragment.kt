@@ -1,12 +1,9 @@
 package bisq.android.chart
 
-import android.R
-import android.app.ActionBar
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +21,6 @@ import network.bisq.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
-import bisq.android.chart.CandleInterval as t
 
 class ChartFragment : BaseFragment() {
 
@@ -48,7 +44,6 @@ class ChartFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View = FragmentChartBinding.inflate(inflater, container, false).apply {
         binding = this
-//        viewModel.getCharts("BTC_USD", t.DAY)
     }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,7 +80,7 @@ class ChartFragment : BaseFragment() {
                         binding.candleChart.setBackgroundColor(
                             ContextCompat.getColor(
                                 requireContext(),
-                                R.color.white
+                                android.R.color.white
                             )
                         )
 
@@ -103,17 +98,17 @@ class ChartFragment : BaseFragment() {
                         candleDataSet.color = Color.rgb(80, 80, 80)
                         candleDataSet.shadowColor = ContextCompat.getColor(
                             requireContext(),
-                            R.color.darker_gray
+                            android.R.color.darker_gray
                         )
                         candleDataSet.shadowWidth = 1f
                         candleDataSet.decreasingColor =
-                            ContextCompat.getColor(requireContext(), R.color.holo_red_dark)
+                            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
                         candleDataSet.decreasingPaintStyle = Paint.Style.FILL
 
 
                         candleDataSet.increasingColor = ContextCompat.getColor(
                             requireContext(),
-                            R.color.holo_green_light
+                            android.R.color.holo_green_light
                         )
                         candleDataSet.increasingPaintStyle = Paint.Style.FILL
 
@@ -126,8 +121,8 @@ class ChartFragment : BaseFragment() {
         binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 viewModel.getCharts(
-                    "BTC_USD",
-                    bisq.android.chart.CandleInterval.values().get(tab?.position ?: 0)
+                    getPair(requireArguments()),
+                    CandleInterval.values().get(tab?.position ?: 0)
                 )
             }
 
@@ -143,15 +138,12 @@ class ChartFragment : BaseFragment() {
 
 
 
-        binding.tabs.addTab(binding.tabs.newTab().setText("30M"))
-        binding.tabs.addTab(binding.tabs.newTab().setText("1H"))
-        binding.tabs.addTab(binding.tabs.newTab().setText("12H"))
-        binding.tabs.addTab(binding.tabs.newTab().setText("1D"))
-        binding.tabs.addTab(binding.tabs.newTab().setText("1W"))
-        binding.tabs.addTab(binding.tabs.newTab().setText("1M"))
-        binding.tabs.addTab(binding.tabs.newTab().setText("1Y"))
-
-
+        CandleInterval.values().forEach {
+            binding.tabs.addTab(binding.tabs.newTab().setText(it.value))
+        }
     }
+
+    private fun getPair(arguments: Bundle) = arguments.getString("pair") ?: ""
+
 }
 

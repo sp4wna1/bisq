@@ -19,7 +19,6 @@ class AssetFragment : BaseFragment() {
 
     private val viewModel: AssetViewModel by viewModel()
 
-    private val adapter = AssetAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +37,7 @@ class AssetFragment : BaseFragment() {
     private fun initViews() {
         viewModel.fetchCurrencies()
 
-        binding.coinsList.adapter = adapter
+        binding.coinsList.adapter = AssetAdapter(getCurrencyCode(requireArguments()))
         binding.searchAsset.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 TODO("Not yet implemented")
@@ -48,6 +47,7 @@ class AssetFragment : BaseFragment() {
                 TODO("Not yet implemented")
             }
         })
+
     }
 
     private fun observeCurrencies() {
@@ -55,7 +55,7 @@ class AssetFragment : BaseFragment() {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     binding.progress.visibility = View.GONE
-                    adapter.setData(it.data ?: emptyList())
+                    (binding.coinsList.adapter as AssetAdapter).setData(it.data ?: emptyList())
                 }
                 Resource.Status.ERROR -> {
                     binding.progress.visibility = View.GONE
@@ -67,4 +67,6 @@ class AssetFragment : BaseFragment() {
             }
         }
     }
+
+    private fun getCurrencyCode(arguments: Bundle) = arguments.getString("currency")
 }
