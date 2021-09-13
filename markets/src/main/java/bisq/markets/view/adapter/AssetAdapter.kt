@@ -2,11 +2,14 @@ package bisq.markets.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import bisq.local.Currency
 import bisq.markets.databinding.ItemAssetBinding
+import bisq.markets.view.AssetFragmentDirections
 
-internal class AssetAdapter : RecyclerView.Adapter<AssetAdapter.ViewHolder>() {
+internal class AssetAdapter(private val currencyCode: String?) :
+    RecyclerView.Adapter<AssetAdapter.ViewHolder>() {
 
     private val assets = mutableListOf<Currency>()
 
@@ -25,7 +28,7 @@ internal class AssetAdapter : RecyclerView.Adapter<AssetAdapter.ViewHolder>() {
         holder.setUp(assets[position])
     }
 
-    internal class ViewHolder(
+    internal inner class ViewHolder(
         private val binding: ItemAssetBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -34,6 +37,8 @@ internal class AssetAdapter : RecyclerView.Adapter<AssetAdapter.ViewHolder>() {
             binding.name.text = currency.name
 
             binding.root.setOnClickListener {
+                it.findNavController()
+                    .navigate(AssetFragmentDirections.actionAssetFragmentToChartFragment("${currency.code}_${currencyCode}"))
             }
         }
 

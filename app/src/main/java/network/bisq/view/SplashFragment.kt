@@ -16,15 +16,13 @@ class SplashFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = FragmentSplashBinding.inflate(inflater, container, false).apply {
-
+        savedInstanceState: Bundle?,
+    ): View = FragmentSplashBinding.inflate(inflater, container, false).apply {
         binding = this
-
-        binding.root.postDelayed({
-            binding.root.findNavController().navigate(R.id.action_splashFragment_to_currencyFragment)
+        root.postDelayed({
+            root.findNavController()
+                .navigate(SplashFragmentDirections.actionSplashFragmentToCurrencyFragment())
         }, 2000L)
-
     }.root
 
 }

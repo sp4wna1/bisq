@@ -1,23 +1,27 @@
 buildscript {
     repositories {
+        maven { url 'https://jitpack.io' }
         google()
         jcenter()
     }
 
     ext {
         versions = [
-                'kotlin': "1.5.10",
-                'gradle': "4.2.2"
+                'kotlin'    : "1.5.10",
+                'gradle'    : "4.2.2",
+                'navigation': "2.3.4",
         ]
         libraries = [
-                'kotlinPlugin': "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
-                'gradle'      : "com.android.tools.build:gradle:${versions.gradle}"
+                'kotlinPlugin'      : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+                'gradle'            : "com.android.tools.build:gradle:${versions.gradle}",
+                'navigationSafeArgs': "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
         ]
     }
 
     dependencies {
-        classpath libraries.gradle
         classpath libraries.kotlinPlugin
+        classpath libraries.gradle
+        classpath libraries.navigationSafeArgs
     }
 }
 
@@ -25,6 +29,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 

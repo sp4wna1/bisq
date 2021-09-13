@@ -10,12 +10,12 @@ ext {
             'appCompat'    : "1.1.0",
             'material'     : "1.1.0",
             'constraint'   : "2.0.4",
-            'navigation'   : "2.3.4",
             'koin'         : "2.2.2",
             'viewModel'    : "2.3.0",
             'retrofit'     : "2.9.0",
             'gson'         : "2.8.6",
-            "gsonConverter": "2.9.0"
+            "gsonConverter": "2.9.0",
+            "philJay"      : "v3.1.0"
     ]
     libraries += [
             'kotlin'            : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
@@ -32,7 +32,8 @@ ext {
             'koinAndroid'       : "org.koin:koin-android:${versions.koin}",
             'retrofit'          : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
             'gson'              : "com.google.code.gson:gson:${versions.gson}",
-            'gsonConverter'     : "com.squareup.retrofit2:converter-gson:${versions.gsonConverter}"
+            'gsonConverter'     : "com.squareup.retrofit2:converter-gson:${versions.gsonConverter}",
+            'philJay'           : "com.github.PhilJay:MPAndroidChart:${versions.philJay}",
 
     ]
 }

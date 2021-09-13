@@ -1,5 +1,6 @@
 package bisq.markets.view.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -36,7 +37,10 @@ internal class CurrencyAdapter : RecyclerView.Adapter<CurrencyAdapter.ViewHolder
 
             binding.root.setOnClickListener {
                 binding.root.findNavController()
-                    .navigate(network.bisq.R.id.action_currencyFragment_to_assetFragment)
+                    .navigate(network.bisq.R.id.action_currencyFragment_to_assetFragment,
+                        Bundle().apply {
+                            putString("currency", currency.code)
+                        })
             }
         }
 
