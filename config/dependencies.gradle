@@ -14,7 +14,8 @@ ext {
             'viewModel'    : "2.3.0",
             'retrofit'     : "2.9.0",
             'gson'         : "2.8.6",
-            "gsonConverter": "2.9.0"
+            "gsonConverter": "2.9.0",
+            "philJay"      : "v3.1.0"
     ]
     libraries += [
             'kotlin'            : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
@@ -32,6 +33,7 @@ ext {
             'retrofit'          : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
             'gson'              : "com.google.code.gson:gson:${versions.gson}",
             'gsonConverter'     : "com.squareup.retrofit2:converter-gson:${versions.gsonConverter}",
+            'philJay'           : "com.github.PhilJay:MPAndroidChart:${versions.philJay}",
 
     ]
 }
