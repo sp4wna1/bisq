@@ -48,9 +48,10 @@ dependencies {
     implementation libraries.navigationFragment
     implementation libraries.navigationUi
     implementation libraries.navigationDynamic
+    implementation libraries.retrofit
+    implementation libraries.gson
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
 
     api libraries.constraint
     api libraries.viewModel
