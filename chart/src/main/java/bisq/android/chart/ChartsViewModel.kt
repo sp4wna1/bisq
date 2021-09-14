@@ -14,7 +14,6 @@ internal class ChartsViewModel(
 ) : BaseViewModel() {
 
     internal val candles = MutableLiveData<Resource<List<CandleResponse>>>()
-
     fun getCharts(market: String, interval: CandleInterval) {
         viewModelScope.launch {
             getChartsUseCase.getCandles(market, interval)
