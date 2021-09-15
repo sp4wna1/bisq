@@ -75,11 +75,27 @@ class LineFragment : BaseFragment() {
                         xval.setDrawGridLines(false)
 
 
+
+                        binding.lineChart.xAxis.setDrawGridLines(true)
+                        binding.lineChart.xAxis.gridColor =
+                            ContextCompat.getColor(requireContext(), R.color.grid_color)
+                        binding.lineChart.axisLeft.gridColor = ContextCompat.getColor(
+                            requireContext(), android.R.color.darker_gray
+
+                        )
+                        binding.lineChart.axisRight.gridColor =
+                            ContextCompat.getColor(requireContext(), R.color.grid_color)
+                        ContextCompat.getColor(requireContext(), R.color.grid_color)
+
+                        binding.lineChart.xAxis.textColor =
+                            ContextCompat.getColor(requireContext(), R.color.grid_color)
+                        binding.lineChart.axisLeft.isEnabled = false
+                        binding.lineChart.axisRight.textColor =
+                            ContextCompat.getColor(requireContext(), R.color.grid_color)
                         binding.lineChart.setBackgroundColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                android.R.color.white
-                            )
+                            ContextCompat.getColor(requireContext(), R.color.background_color)
+
+
                         )
 
                         val candleList = lines.mapIndexed { index, candleResponse ->
