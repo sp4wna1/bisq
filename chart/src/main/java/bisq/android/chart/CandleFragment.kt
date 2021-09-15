@@ -79,12 +79,26 @@ class CandleFragment : BaseFragment() {
                         xval.position = XAxis.XAxisPosition.BOTTOM
                         xval.setDrawGridLines(false)
 
+                        binding.candleChart.xAxis.setDrawGridLines(true)
+                        binding.candleChart.xAxis.gridColor =
+                            ContextCompat.getColor(requireContext(), R.color.grid_color)
+                        binding.candleChart.axisLeft.gridColor = ContextCompat.getColor(
+                            requireContext(), android.R.color.darker_gray
 
+                        )
+                        binding.candleChart.axisRight.gridColor =
+                            ContextCompat.getColor(requireContext(), R.color.grid_color)
+                        ContextCompat.getColor(requireContext(), R.color.grid_color)
+
+                        binding.candleChart.xAxis.textColor =
+                            ContextCompat.getColor(requireContext(), R.color.grid_color)
+                        binding.candleChart.axisLeft.isEnabled = false
+                        binding.candleChart.axisRight.textColor =
+                            ContextCompat.getColor(requireContext(), R.color.grid_color)
                         binding.candleChart.setBackgroundColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                android.R.color.white
-                            )
+                            ContextCompat.getColor(requireContext(), R.color.background_color)
+
+
                         )
 
                         val candleList = candles.mapIndexed { index, candleResponse ->
@@ -99,19 +113,21 @@ class CandleFragment : BaseFragment() {
 
                         val candleDataSet = CandleDataSet(candleList, "first")
                         candleDataSet.color = Color.rgb(80, 80, 80)
-                        candleDataSet.shadowColor = ContextCompat.getColor(
-                            requireContext(),
-                            android.R.color.darker_gray
-                        )
+                        candleDataSet.valueTextColor =
+                            ContextCompat.getColor(requireContext(), android.R.color.white)
+                        candleDataSet.shadowColorSameAsCandle = true
+
+
+//
                         candleDataSet.shadowWidth = 1f
                         candleDataSet.decreasingColor =
-                            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+                            ContextCompat.getColor(requireContext(), R.color.red_candle)
                         candleDataSet.decreasingPaintStyle = Paint.Style.FILL
 
 
                         candleDataSet.increasingColor = ContextCompat.getColor(
                             requireContext(),
-                            android.R.color.holo_green_light
+                            R.color.green_candle
                         )
                         candleDataSet.increasingPaintStyle = Paint.Style.FILL
 
