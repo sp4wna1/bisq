@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red_candle">#F6465D</color>
+    <color name="green_candle">#0ECB81</color>
+    <color name="background_color">#14151A</color>
+    <color name="grid_color">#828D9A</color>
+    <color name="bisq_green">#009933</color>
+</resources>
