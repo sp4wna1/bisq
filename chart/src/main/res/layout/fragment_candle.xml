@@ -9,14 +9,21 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabIndicator="@color/bisq_green"
+        app:tabIndicatorColor="@color/bisq_green"
+        app:tabIndicatorHeight="2dp"
+        app:tabSelectedTextColor="@color/bisq_green"
+        app:tabTextColor="@color/grid_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabBackground="@color/background_color" />
 
     <com.github.mikephil.charting.charts.CandleStickChart
         android:id="@+id/candleChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +33,7 @@
         android:id="@+id/progress_candle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminateTint="@color/bisq_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
