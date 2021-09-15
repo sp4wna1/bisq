@@ -11,6 +11,8 @@ import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.green
+import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -70,6 +72,7 @@ class ChartFragment : BaseFragment() {
     }.root
 
     private fun configViewPager() {
+        binding.chartsViewPager2.isUserInputEnabled = false
         binding.chartsViewPager2.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -81,7 +84,10 @@ class ChartFragment : BaseFragment() {
 
 
     private fun configTabLayout() {
-        binding.chartsTabLayout.addTab(binding.chartsTabLayout.newTab().setText("CandlesChart"))
+        binding.chartsTabLayout.addTab(binding.chartsTabLayout.newTab().apply {
+            text = "CandlesChart"
+
+        })
         binding.chartsTabLayout.addTab(binding.chartsTabLayout.newTab().setText("LinesChart"))
 
         binding.chartsTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
