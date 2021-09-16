@@ -43,6 +43,21 @@ class CandleFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getTickers(getPair(requireArguments()))
+        viewModel.tickers.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+
+                }
+                Resource.Status.ERROR -> {
+
+                }
+                Resource.Status.SUCCESS -> {
+                    val ticker = it.data
+                    binding.valueUSD.setText(ticker?.last?.toString())
+                }
+            }
+        }
         viewModel.candles.observe(viewLifecycleOwner) {
             when (it.status) {
                 Resource.Status.LOADING -> {
@@ -118,7 +133,6 @@ class CandleFragment : BaseFragment() {
                         candleDataSet.shadowColorSameAsCandle = true
 
 
-//
                         candleDataSet.shadowWidth = 1f
                         candleDataSet.decreasingColor =
                             ContextCompat.getColor(requireContext(), R.color.red_candle)
@@ -154,6 +168,8 @@ class CandleFragment : BaseFragment() {
             }
 
         })
+
+
 
 
 
