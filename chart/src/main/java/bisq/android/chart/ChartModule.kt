@@ -6,7 +6,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val chartModule = module {
-    viewModel { ChartsViewModel(get()) }
+    viewModel { ChartsViewModel(get(),get()) }
 
     factory<GetChartsUseCase> { GetChartsUseCaseImpl(get()) }
 
