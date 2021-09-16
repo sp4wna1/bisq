@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.green
 import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import bisq.android.chart.databinding.FragmentChartBinding
@@ -37,12 +38,12 @@ class ChartFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        loadKoinModules(listOf(remoteModule, chartModule))
+        loadKoinModules(listOf(remoteModule, chartModule, tickerModule))
     }
 
     override fun onDetach() {
         super.onDetach()
-        unloadKoinModules(listOf(remoteModule, chartModule))
+        unloadKoinModules(listOf(remoteModule, chartModule, tickerModule))
     }
 
     override fun onCreateView(
@@ -52,17 +53,14 @@ class ChartFragment : BaseFragment() {
     ): View = FragmentChartBinding.inflate(inflater, container, false).apply {
         binding = this
 
+        val args  by navArgs<ChartFragmentArgs>()
         configTabLayout()
         binding.chartsViewPager2.adapter = FragmentAdapter(listOf(
             CandleFragment().apply {
-                arguments = Bundle().apply {
-                    putString("pair", "btc_brl")
-                }
+                arguments = requireArguments()
             },
             LineFragment().apply {
-                arguments = Bundle().apply {
-                    putString("pair", "btc_brl")
-                }
+                arguments = requireArguments()
             }
         ), childFragmentManager, lifecycle
         )
