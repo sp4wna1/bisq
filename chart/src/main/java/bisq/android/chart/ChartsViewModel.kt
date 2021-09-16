@@ -10,8 +10,25 @@ import kotlinx.coroutines.launch
 import network.bisq.base.BaseViewModel
 
 internal class ChartsViewModel(
+    private val getTickersUseCase: GetTickersUseCase,
     private val getChartsUseCase: GetChartsUseCase,
 ) : BaseViewModel() {
+
+    internal val tickers = MutableLiveData<Resource<TickerResponse>>()
+    fun getTickers(market: String) {
+        viewModelScope.launch {
+            getTickersUseCase.getTickers(market)
+                .onStart {
+                    tickers.postValue(Resource.loading())
+                }.catch {
+                    tickers.postValue(Resource.error(it))
+                }
+                .collect {
+                    tickers.postValue(Resource.success(it))
+                }
+        }
+    }
+
 
     internal val candles = MutableLiveData<Resource<List<CandleResponse>>>()
     fun getCharts(market: String, interval: CandleInterval) {
