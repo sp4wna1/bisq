@@ -57,10 +57,13 @@ class ChartFragment : BaseFragment() {
         configTabLayout()
         binding.chartsViewPager2.adapter = FragmentAdapter(listOf(
             CandleFragment().apply {
-                arguments = requireArguments()
+          arguments = Bundle().apply {
+                    putString("pair", "btc_brl")
+                }
             },
-            LineFragment().apply {
-                arguments = requireArguments()
+            LineFragment().apply { arguments = Bundle().apply {
+                    putString("pair", "btc_brl")
+                }
             }
         ), childFragmentManager, lifecycle
         )
