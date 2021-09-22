@@ -38,12 +38,12 @@ class ChartFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        loadKoinModules(listOf(remoteModule, chartModule, tickerModule))
+        loadKoinModules(listOf(remoteModule, chartModule, tickerModule, volumeMarketModule))
     }
 
     override fun onDetach() {
         super.onDetach()
-        unloadKoinModules(listOf(remoteModule, chartModule, tickerModule))
+        unloadKoinModules(listOf(remoteModule, chartModule, tickerModule, volumeMarketModule))
     }
 
     override fun onCreateView(
@@ -53,7 +53,6 @@ class ChartFragment : BaseFragment() {
     ): View = FragmentChartBinding.inflate(inflater, container, false).apply {
         binding = this
 
-        val args  by navArgs<ChartFragmentArgs>()
         configTabLayout()
         binding.chartsViewPager2.adapter = FragmentAdapter(listOf(
             CandleFragment().apply {
@@ -65,6 +64,7 @@ class ChartFragment : BaseFragment() {
                     putString("pair", "btc_brl")
                 }
             }
+
         ), childFragmentManager, lifecycle
         )
         configViewPager()
