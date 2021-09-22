@@ -36,7 +36,7 @@ class LineFragment : BaseFragment() {
 
         numberFormat.maximumFractionDigits = 0
 
-        viewModel.getTickers(getPair(requireArguments()))
+//        viewModel.getTickers(getPair(requireArguments()))
         viewModel.tickers.observe(viewLifecycleOwner) {
             when (it.status) {
                 Resource.Status.LOADING -> {
