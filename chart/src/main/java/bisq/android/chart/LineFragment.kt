@@ -36,6 +36,7 @@ class LineFragment : BaseFragment() {
 
         numberFormat.maximumFractionDigits = 0
 
+
 //        viewModel.getTickers(getPair(requireArguments()))
         viewModel.tickers.observe(viewLifecycleOwner) {
             when (it.status) {
@@ -93,6 +94,8 @@ class LineFragment : BaseFragment() {
                         binding.lineChart.axisRight.textColor = ContextCompat.getColor(requireContext(), R.color.grid_color)
                         binding.lineChart.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background_color))
                         binding.lineChart.xAxis.setDrawGridLines(true)
+                        binding.lineChart.marker = Marker(requireContext())
+
 
                         val candleList = lines.mapIndexed { index, candleResponse -> Entry(index.toFloat(), candleResponse.close.toFloat()) }
                         val lineDataSet = LineDataSet(candleList, "first")
