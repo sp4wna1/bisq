@@ -59,11 +59,11 @@ class CurrencyFragment : BaseFragment() {
         binding.coinsList.adapter = adapter
         binding.searchCoin.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
+                TODO()
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
+                TODO()
             }
         })
     }
