@@ -3,7 +3,6 @@ package bisq.android.chart
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,11 @@ import androidx.core.content.ContextCompat
 import bisq.android.chart.databinding.FragmentCandleBinding
 import bisq.local.Resource
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
-import com.google.android.material.tabs.TabLayout
+import com.github.mikephil.charting.data.CandleData
+import com.github.mikephil.charting.data.CandleDataSet
+import com.github.mikephil.charting.data.CandleEntry
 import network.bisq.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.math.BigDecimal
 import java.text.NumberFormat
 
 class CandleFragment : BaseFragment() {
@@ -37,91 +36,18 @@ class CandleFragment : BaseFragment() {
         val numberFormat = NumberFormat.getCurrencyInstance()
 
         numberFormat.maximumFractionDigits = 0;
-
-
-        viewModel.tick.observe(viewLifecycleOwner){
-            binding.chronometer.text = it.toString()
-        }
-
-        viewModel.getTickers(getPair(requireArguments()))
-        viewModel.tickers.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Resource.Status.LOADING -> {
-
-                }
-                Resource.Status.ERROR -> {
-
-                }
-                Resource.Status.SUCCESS -> {
-                    val ticker = it.data
-                    val convert = numberFormat.format(BigDecimal(ticker?.last))
-                    binding.valueUSD.text = convert.toString()
-
-
-                }
-            }
-        }
-
-        viewModel.volumes.observe(viewLifecycleOwner) {
-            when (it.status){
-                Resource.Status.LOADING -> {
-                    binding.progressBarChart.visibility = View.VISIBLE
-                    binding.barChart.visibility = View.INVISIBLE
-
-
-                }
-                Resource.Status.ERROR ->{
-                    binding.progressBarChart.visibility = View.INVISIBLE
-                    binding.barChart.visibility = View.INVISIBLE
-
-
-                }
-                Resource.Status.SUCCESS -> {
-                    binding.barChart.visibility = View.VISIBLE
-                    binding.progressBarChart.visibility = View.INVISIBLE
-
-
-                    val xval1 = binding.barChart.xAxis
-                    xval1.position = XAxis.XAxisPosition.BOTTOM
-                    xval1.setDrawGridLines(false)
-
-                    val volumes = it.data
-
-                    val barList = volumes?.mapIndexed { index, it -> BarEntry(index.toFloat(),it.volume.toFloat()) } ?: emptyList()
-
-
-
-                    binding.barChart.xAxis.gridColor = ContextCompat.getColor(requireContext(), R.color.grid_color)
-                    binding.barChart.axisLeft.gridColor = ContextCompat.getColor(requireContext(), android.R.color.darker_gray)
-                    binding.barChart.axisRight.gridColor = ContextCompat.getColor(requireContext(), R.color.grid_color)
-                    binding.barChart.xAxis.textColor = ContextCompat.getColor(requireContext(), R.color.grid_color)
-                    binding.barChart.axisLeft.isEnabled = false
-                    binding.barChart.axisRight.textColor = ContextCompat.getColor(requireContext(), R.color.grid_color)
-                    binding.barChart.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background_color))
-
-                    val barDataSet = BarDataSet(barList, "teste")
-                    barDataSet.color = Color.rgb(80, 80, 80)
-                    barDataSet.valueTextColor = ContextCompat.getColor(requireContext(), android.R.color.white)
-
-
-                    binding.barChart.data = BarData(barDataSet)
-
-                }
-            }
-        }
+       // viewModel.getTickers()
+        viewModel.getCharts(requireArguments().getString("pair") ?: "", CandleInterval.DAY)
         viewModel.candles.observe(viewLifecycleOwner) {
             when (it.status) {
                 Resource.Status.LOADING -> {
-                    binding.progressCandle.visibility = View.VISIBLE
                     binding.candleChart.visibility = View.INVISIBLE
                 }
                 Resource.Status.ERROR -> {
-                    binding.progressCandle.visibility = View.INVISIBLE
                     binding.candleChart.visibility = View.INVISIBLE
 
                 }
                 Resource.Status.SUCCESS -> {
-                    binding.progressCandle.visibility = View.INVISIBLE
                     binding.candleChart.visibility = View.VISIBLE
                     binding.candleChart.invalidate()
 
@@ -137,9 +63,6 @@ class CandleFragment : BaseFragment() {
                         xvalue.add("5:00 PM")
                         xvalue.add("8:00 PM")
                         xvalue.add("10:00 PM")
-
-
-
 
 
                         val xval = binding.candleChart.xAxis
@@ -180,26 +103,5 @@ class CandleFragment : BaseFragment() {
                 }
             }
         }
-        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                viewModel.getCharts(getPair(requireArguments()), CandleInterval.values().get(tab?.position ?: 0))
-                viewModel.getVolumes(getPair(requireArguments()), CandleInterval.values().get(tab?.position ?: 0))
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-        }
-        )
-
-        CandleInterval.values().forEach { binding.tabs.addTab(binding.tabs.newTab().setText(it.value)) }
-
     }
-
-    private fun getPair(arguments: Bundle) = arguments.getString("pair") ?: ""
-
 }
