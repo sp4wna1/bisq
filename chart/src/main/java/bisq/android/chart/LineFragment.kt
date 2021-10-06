@@ -10,11 +10,11 @@ import androidx.core.content.ContextCompat
 import bisq.android.chart.databinding.FragmentLineChartBinding
 import bisq.local.Resource
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
-import com.google.android.material.tabs.TabLayout
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import network.bisq.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.math.BigDecimal
 import java.text.NumberFormat
 
 class LineFragment : BaseFragment() {
@@ -35,37 +35,17 @@ class LineFragment : BaseFragment() {
         val numberFormat = NumberFormat.getCurrencyInstance()
 
         numberFormat.maximumFractionDigits = 0
-
-
-//        viewModel.getTickers(getPair(requireArguments()))
-        viewModel.tickers.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Resource.Status.LOADING -> {
-
-                }
-                Resource.Status.ERROR -> {
-
-                }
-                Resource.Status.SUCCESS -> {
-                    val ticker = it.data
-                    val convert = numberFormat.format(BigDecimal(ticker?.last))
-                    binding.valueUSD.text = convert.toString()
-                }
-            }
-        }
+        viewModel.getCharts(requireArguments().getString("pair")?: "", CandleInterval.DAY)
         viewModel.candles.observe(viewLifecycleOwner) {
             when (it.status) {
                 Resource.Status.LOADING -> {
-                    binding.progressCandle.visibility = View.VISIBLE
                     binding.lineChart.visibility = View.INVISIBLE
                 }
                 Resource.Status.ERROR -> {
-                    binding.progressCandle.visibility = View.INVISIBLE
                     binding.lineChart.visibility = View.INVISIBLE
 
                 }
                 Resource.Status.SUCCESS -> {
-                    binding.progressCandle.visibility = View.INVISIBLE
                     binding.lineChart.visibility = View.VISIBLE
                     binding.lineChart.invalidate()
 
@@ -108,24 +88,5 @@ class LineFragment : BaseFragment() {
                 }
             }
         }
-        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                viewModel.getCharts(getPair(requireArguments()), CandleInterval.values().get(tab?.position ?: 0))
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-        }
-        )
-
-        CandleInterval.values().forEach { binding.tabs.addTab(binding.tabs.newTab().setText(it.value)) }
     }
-
-    private fun getPair(arguments: Bundle) = arguments.getString("pair") ?: ""
-
 }
